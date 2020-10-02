@@ -6,11 +6,11 @@ import "@vkontakte/vkui/dist/vkui.css";
 
 import Home from "./panels/Home";
 import Persik from "./panels/Persik";
-const API_KEY = "7b54ec9db6e9b0fc5a15a53d622d32d9";
+
 const App = () => {
   const [activePanel, setActivePanel] = useState("home");
   const [fetchedUser, setUser] = useState(null);
-  const [City, setCity] = useState("London");
+
   useEffect(() => {
     bridge.subscribe(({ detail: { type, data } }) => {
       if (type === "VKWebAppUpdateConfig") {
@@ -23,14 +23,7 @@ const App = () => {
       const user = await bridge.send("VKWebAppGetUserInfo");
       setUser(user);
     }
-    async function gettingWeather() {
-      const api_url = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${City}&appid=${API_KEY}`
-      );
-      const data = await api_url.json();
-      console.log(data);
-    }
-    gettingWeather();
+
     fetchData();
   }, []);
 
