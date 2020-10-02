@@ -10,7 +10,8 @@ const API_KEY = "7b54ec9db6e9b0fc5a15a53d622d32d9";
 const App = () => {
   const [activePanel, setActivePanel] = useState("home");
   const [fetchedUser, setUser] = useState(null);
-  const [City, setCity] = useState("London");
+  const [City, setCity] = useState("Kasimov");
+  const[Data, SetData]=useState(null);
   useEffect(() => {
     bridge.subscribe(({ detail: { type, data } }) => {
       if (type === "VKWebAppUpdateConfig") {
@@ -25,10 +26,11 @@ const App = () => {
     }
     async function gettingWeather() {
       const api_url = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${City}&appid=${API_KEY}`
+        `https://api.openweathermap.org/data/2.5/weather?q=${City}&units=metric&appid=${API_KEY}`
       );
       const data = await api_url.json();
       console.log(data);
+      SetData(data)
     }
     gettingWeather();
     fetchData();
@@ -40,7 +42,7 @@ const App = () => {
 
   return (
     <View activePanel={activePanel}>
-      <Home id="home" fetchedUser={fetchedUser} go={go} />
+      <Home id="home" fetchedUser={fetchedUser} data={Data} go={go} />
       <Persik id="persik" go={go} />
     </View>
   );
