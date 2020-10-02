@@ -7,17 +7,28 @@ import Group from "@vkontakte/vkui/dist/components/Group/Group";
 import Cell from "@vkontakte/vkui/dist/components/Cell/Cell";
 import Div from "@vkontakte/vkui/dist/components/Div/Div";
 import Avatar from "@vkontakte/vkui/dist/components/Avatar/Avatar";
+<<<<<<< HEAD
 import { FormLayout, Select, Text, Input, Header, SimpleCell, InfoRow, } from "@vkontakte/vkui";
+=======
+import ScreenSpinner from "@vkontakte/vkui/dist/components/ScreenSpinner/ScreenSpinner";
+
+import { FormLayout, Select, Text, Input } from "@vkontakte/vkui";
+>>>>>>> 29d9a9d3b51f2ed3a986f1e14b8b7397c59f7fe9
 const API_KEY = "7b54ec9db6e9b0fc5a15a53d622d32d9";
+const Lang = "ru";
 const Home = ({ id, go, fetchedUser }) => {
   const [City, setCity] = useState("London");
   const [Data, setData] = useState(null);
+<<<<<<< HEAD
   const [Data2, setData2] = useState(null);
   const cityValue=useRef();
+=======
+  const cityValue = useRef();
+>>>>>>> 29d9a9d3b51f2ed3a986f1e14b8b7397c59f7fe9
   useEffect(() => {
     async function gettingWeather() {
       const api_url = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${City}&appid=${API_KEY}&units=metric&lang=ru`
+        `https://api.openweathermap.org/data/2.5/weather?q=${City}&appid=${API_KEY}&units=metric&lang=${Lang}`
       );
       const api_url_2=await fetch(
         `https://api.openweathermap.org/data/2.5/forecast?q=${City}&appid=${API_KEY}&units=metric&lang=ru`
@@ -31,11 +42,10 @@ const Home = ({ id, go, fetchedUser }) => {
     }
     gettingWeather();
   }, [City]);
-  function ShowResults(){
-    const name=cityValue.current.value;
+  function ShowResults() {
+    const name = cityValue.current.value;
     console.log(name);
-    setCity(name)
-    
+    setCity(name);
   }
  
   return (
@@ -62,6 +72,7 @@ const Home = ({ id, go, fetchedUser }) => {
         
       )}
 
+<<<<<<< HEAD
       
       <FormLayout>
     
@@ -110,6 +121,41 @@ const Home = ({ id, go, fetchedUser }) => {
       </Group>)}
       
       
+=======
+      <Group title="Navigation Example">
+        <Div>
+          {Data === null || Data === undefined ? (
+            <ScreenSpinner />
+          ) : (
+            <Text weight="semibold" style={{ marginBottom: 16 }}>
+              {String(Data.name) + " " + String(Data.main.temp) + " °C"}
+            </Text>
+          )}
+        </Div>
+
+        <Div>
+          <Button size="xl" level="2" onClick={go} data-to="persik">
+            Обсудить погоду
+          </Button>
+        </Div>
+      </Group>
+      <FormLayout>
+        {/* <Select
+          top="Город"
+          placeholder="Выберите город"
+          onChange={(e) => {
+            setCity(e.target.value);
+            console.log(City);
+          }}
+        >
+          <option value="London, GB">Лондон</option>
+          <option value="Moscow, RU">Москва</option>
+        </Select> */}
+        <Input getRef={cityValue} placeholder="Выберите город" />
+        <Button onClick={ShowResults} size="xl">
+          Показать
+        </Button>
+>>>>>>> 29d9a9d3b51f2ed3a986f1e14b8b7397c59f7fe9
       </FormLayout>
     </Panel>
   );
