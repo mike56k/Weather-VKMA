@@ -7,15 +7,18 @@ import Group from "@vkontakte/vkui/dist/components/Group/Group";
 import Cell from "@vkontakte/vkui/dist/components/Cell/Cell";
 import Div from "@vkontakte/vkui/dist/components/Div/Div";
 import Avatar from "@vkontakte/vkui/dist/components/Avatar/Avatar";
+import ScreenSpinner from "@vkontakte/vkui/dist/components/ScreenSpinner/ScreenSpinner";
+
 import { FormLayout, Select, Text } from "@vkontakte/vkui";
 const API_KEY = "7b54ec9db6e9b0fc5a15a53d622d32d9";
+const Lang = "ru";
 const Home = ({ id, go, fetchedUser }) => {
   const [City, setCity] = useState("London");
   const [Data, setData] = useState(null);
   useEffect(() => {
     async function gettingWeather() {
       const api_url = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${City}&appid=${API_KEY}&units=metric`
+        `https://api.openweathermap.org/data/2.5/weather?q=${City}&appid=${API_KEY}&units=metric&lang=${Lang}`
       );
       const data = await api_url.json();
       setData(data);
@@ -25,7 +28,7 @@ const Home = ({ id, go, fetchedUser }) => {
   }, [City]);
   return (
     <Panel id={id}>
-      <PanelHeader>Example</PanelHeader>
+      <PanelHeader>Погода</PanelHeader>
       {fetchedUser && (
         <Group title="User Data Fetched with VK Bridge">
           <Cell
@@ -47,33 +50,33 @@ const Home = ({ id, go, fetchedUser }) => {
 
       <Group title="Navigation Example">
         <Div>
-          <Button size="xl" level="2" onClick={go} data-to="persik">
-            Show me the Persik, please
-          </Button>
           {Data === null || Data === undefined ? (
-            <Text weight="semibold" style={{ marginBottom: 16 }}>
-              Загрузка
-            </Text>
+            <ScreenSpinner />
           ) : (
             <Text weight="semibold" style={{ marginBottom: 16 }}>
               {String(Data.name) + " " + String(Data.main.temp) + " °C"}
             </Text>
           )}
         </Div>
+        <FormLayout>
+          <Select
+            top="Город"
+            placeholder="Выберите город"
+            onChange={(e) => {
+              setCity(e.target.value);
+              console.log(City);
+            }}
+          >
+            <option value="London, GB">Лондон</option>
+            <option value="Moscow, RU">Москва</option>
+          </Select>
+        </FormLayout>
+        <Div>
+          <Button size="xl" level="2" onClick={go} data-to="persik">
+            Обсудить погоду
+          </Button>
+        </Div>
       </Group>
-      <FormLayout>
-        <Select
-          top="Город"
-          placeholder="Выберите город"
-          onChange={(e) => {
-            setCity(e.target.value);
-            console.log(City);
-          }}
-        >
-          <option value="London, GB">Лондон</option>
-          <option value="Moscow, RU">Москва</option>
-        </Select>
-      </FormLayout>
     </Panel>
   );
 };
