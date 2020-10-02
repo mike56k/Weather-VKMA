@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, setUser, fetchedUser} from "react";
 import bridge from "@vkontakte/vk-bridge";
 import View from "@vkontakte/vkui/dist/components/View/View";
 import "@vkontakte/vkui/dist/vkui.css";
@@ -8,8 +8,8 @@ import Persik from "./panels/Persik";
 
 const App = () => {
   const [activePanel, setActivePanel] = useState("home");
-  const [fetchedUser, setUser] = useState(null);
-
+  
+ 
   useEffect(() => {
     bridge.subscribe(({ detail: { type, data } }) => {
       if (type === "VKWebAppUpdateConfig") {
@@ -22,7 +22,8 @@ const App = () => {
       const user = await bridge.send("VKWebAppGetUserInfo");
       setUser(user);
     }
-
+    
+   
     fetchData();
   }, []);
 
