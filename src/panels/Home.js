@@ -22,12 +22,12 @@ const Home = ({ id, go, fetchedUser }) => {
       const api_url_2=await fetch(
         `https://api.openweathermap.org/data/2.5/forecast?q=${City}&appid=${API_KEY}&units=metric&lang=ru`
       );
-      const data = await api_url.json();
-      const data2 = await api_url_2.json();
-      setData(data);
-      setData2(data2);
-      console.log(data);
-      console.log(data2);
+      const data_api = await api_url.json();
+      const data2_api = await api_url_2.json();
+      setData(data_api);
+      setData2(data2_api);
+      console.log(data_api);
+      console.log(data2_api);
     }
     gettingWeather();
   }, [City]);
@@ -62,34 +62,9 @@ const Home = ({ id, go, fetchedUser }) => {
         
       )}
 
-      {/* <Group title="Navigation Example">
-        <Div>
-          <Button size="xl" level="2" onClick={go} data-to="persik">
-            Show me the Persik, please
-          </Button>
-          {Data === null || Data === undefined ? (
-            <Text weight="semibold" style={{ marginBottom: 16 }}>
-              Загрузка
-            </Text>
-          ) : (
-            <Text weight="semibold" style={{ marginBottom: 16 }}>
-              {String(Data.name) + " " + String(Data.main.temp) + " °C"}
-            </Text>
-          )}
-        </Div>
-      </Group> */}
+      
       <FormLayout>
-      {/* <Select
-          top="Город"
-          placeholder="Выберите город"
-          onChange={(e) => {
-            setCity(e.target.value);
-            console.log(City);
-          }}
-        >
-          <option value="London, GB">Лондон</option>
-          <option value="Moscow, RU">Москва</option>
-        </Select> */}
+    
         <Input getRef={cityValue} placeholder="Введите название города..." />
         <Button onClick={ShowResults}>Показать</Button>
         
@@ -133,7 +108,7 @@ const Home = ({ id, go, fetchedUser }) => {
         
         
       </Group>)}
-      DataOnTime();
+      
       
       </FormLayout>
     </Panel>
