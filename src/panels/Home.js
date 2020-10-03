@@ -7,24 +7,15 @@ import Group from "@vkontakte/vkui/dist/components/Group/Group";
 import Cell from "@vkontakte/vkui/dist/components/Cell/Cell";
 import Div from "@vkontakte/vkui/dist/components/Div/Div";
 import Avatar from "@vkontakte/vkui/dist/components/Avatar/Avatar";
-<<<<<<< HEAD
 import { FormLayout, Select, Text, Input, Header, SimpleCell, InfoRow, } from "@vkontakte/vkui";
-=======
-import ScreenSpinner from "@vkontakte/vkui/dist/components/ScreenSpinner/ScreenSpinner";
-
-import { FormLayout, Select, Text, Input } from "@vkontakte/vkui";
->>>>>>> 29d9a9d3b51f2ed3a986f1e14b8b7397c59f7fe9
 const API_KEY = "7b54ec9db6e9b0fc5a15a53d622d32d9";
 const Lang = "ru";
 const Home = ({ id, go, fetchedUser }) => {
   const [City, setCity] = useState("London");
   const [Data, setData] = useState(null);
-<<<<<<< HEAD
   const [Data2, setData2] = useState(null);
+  const [number, SetNumber]=useState(null);
   const cityValue=useRef();
-=======
-  const cityValue = useRef();
->>>>>>> 29d9a9d3b51f2ed3a986f1e14b8b7397c59f7fe9
   useEffect(() => {
     async function gettingWeather() {
       const api_url = await fetch(
@@ -39,6 +30,7 @@ const Home = ({ id, go, fetchedUser }) => {
       setData2(data2_api);
       console.log(data_api);
       console.log(data2_api);
+      
     }
     gettingWeather();
   }, [City]);
@@ -72,7 +64,6 @@ const Home = ({ id, go, fetchedUser }) => {
         
       )}
 
-<<<<<<< HEAD
       
       <FormLayout>
     
@@ -119,43 +110,59 @@ const Home = ({ id, go, fetchedUser }) => {
         
         
       </Group>)}
-      
-      
-=======
-      <Group title="Navigation Example">
-        <Div>
-          {Data === null || Data === undefined ? (
-            <ScreenSpinner />
-          ) : (
+      {Data2 === null || Data2 === undefined ? (
             <Text weight="semibold" style={{ marginBottom: 16 }}>
-              {String(Data.name) + " " + String(Data.main.temp) + " °C"}
+              Загрузка
             </Text>
-          )}
-        </Div>
-
-        <Div>
-          <Button size="xl" level="2" onClick={go} data-to="persik">
-            Обсудить погоду
-          </Button>
-        </Div>
-      </Group>
-      <FormLayout>
-        {/* <Select
-          top="Город"
-          placeholder="Выберите город"
-          onChange={(e) => {
-            setCity(e.target.value);
-            console.log(City);
-          }}
-        >
-          <option value="London, GB">Лондон</option>
-          <option value="Moscow, RU">Москва</option>
-        </Select> */}
-        <Input getRef={cityValue} placeholder="Выберите город" />
-        <Button onClick={ShowResults} size="xl">
-          Показать
-        </Button>
->>>>>>> 29d9a9d3b51f2ed3a986f1e14b8b7397c59f7fe9
+          ):
+      (
+        <>
+        <Button onClick={()=>SetNumber(0)}>{Data2.list[2].dt_txt}</Button>
+      <Button  onClick={()=>SetNumber(8)}>{Data2.list[10].dt_txt}</Button>
+      <Button  onClick={()=>SetNumber(16)}>{Data2.list[18].dt_txt}</Button>
+      <Button  onClick={()=>SetNumber(24)}>{Data2.list[26].dt_txt}</Button>
+      <Button  onClick={()=>SetNumber(32)}>{Data2.list[34].dt_txt}</Button>
+        </>
+      )}
+      {Data2 === null || Data2 === undefined || number==null ? (
+            <Text weight="semibold" style={{ marginBottom: 16 }}>
+              Загрузка
+            </Text>
+          ):
+        (<Group>
+          <Header mode="secondary">Информация о погоде</Header>
+        <SimpleCell>
+          <InfoRow header="Состояние">
+          {String(Data2.list[number].weather[0].description)}
+          </InfoRow>
+        </SimpleCell>
+        <SimpleCell>
+          <InfoRow header="Средняя температура">
+            {String(Data2.list[number].main.temp) + " °C"}
+          </InfoRow>
+        </SimpleCell>
+        <SimpleCell>
+          <InfoRow header="Ощущается как">
+          {String(Data2.list[number].main.feels_like) + " °C"}
+          </InfoRow>
+        </SimpleCell>
+        <SimpleCell>
+          <InfoRow header="Минимальная температура за день">
+          {String(Data2.list[number].main.temp_min) + " °C"}
+          </InfoRow>
+        </SimpleCell>
+        <SimpleCell>
+          <InfoRow header="Максимальная температура за день">
+          {String(Data2.list[number].main.temp_max) + " °C"}
+          </InfoRow>
+        </SimpleCell>
+        
+        
+      </Group>)}
+      
+      
+      
+      
       </FormLayout>
     </Panel>
   );
